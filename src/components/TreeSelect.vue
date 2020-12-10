@@ -60,6 +60,7 @@ export default {
 
   .title-box {
     height: 50px;
+    cursor: pointer;
 
     h3 {
       margin: 0;

@@ -44,6 +44,7 @@ export default {
 <style lang="less" scoped>
 .tree-select-content-box {
   height: 50px;
+  cursor: pointer;
 
   .content-box {
     display: block;
