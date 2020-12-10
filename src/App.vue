@@ -1,28 +1,14 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <tree-select></tree-select>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TreeSelect from './components/TreeSelect';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    TreeSelect
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
