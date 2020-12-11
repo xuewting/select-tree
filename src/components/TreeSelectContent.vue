@@ -17,9 +17,9 @@
 
   <!-- S 不存在下级 -->
   <div v-else class="tree-select-content-box" @click="changeActiveId(content.id)">
-    <div class="content-box" :class="{ actived: $store.state.activedId === content.id }">
+    <div class="content-box" :class="{ actived: activedId === content.id }">
       <span>{{ content.text }}</span>
-      <van-icon v-if="$store.state.activedId === content.id" class="content-icon" name="success" />
+      <van-icon v-if="activedId === content.id" class="content-icon" name="success" />
     </div>
   </div>
   <!-- E 不存在下级 -->
@@ -27,7 +27,7 @@
 
 <script>
 import { Icon } from 'vant';
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'tree-select-content',
@@ -35,6 +35,9 @@ export default {
     [Icon.name]: Icon
   },
   props: { content: null },
+  computed: {
+    ...mapState(['activedId'])
+  },
   methods: {
     ...mapMutations(['changeActiveId', 'changeCurrentTree', 'changeActiveIndex'])
   }

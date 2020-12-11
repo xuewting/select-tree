@@ -2,11 +2,11 @@
   <div class="tree-select-box">
     <div class="title-box">
       <h3
-        v-if="$store.state.currentRank > 0"
+        v-if="currentRank > 0"
         @click="
           changeCurrentTree({
-            rank: $store.state.currentRank - 1,
-            lastId: findCurrentLastId($store.state.currentLastId)
+            rank: currentRank - 1,
+            lastId: findCurrentLastId(currentLastId)
           })
         "
       >
@@ -15,9 +15,13 @@
       </h3>
     </div>
 
-    <van-tree-select :items="filterCurrentTree" :main-active-index.sync="$store.state.activeIndex">
+    <van-tree-select
+      :items="filterCurrentTree"
+      :main-active-index.sync="activeIndex"
+      @click-nav="changeActiveIndex"
+    >
       <template #content>
-        <div v-for="item in filterCurrentTree[$store.state.activeIndex].children" :key="item.id">
+        <div v-for="item in filterCurrentTree[activeIndex].children" :key="item.id">
           <tree-select-content :content="item"></tree-select-content>
         </div>
       </template>
@@ -27,7 +31,7 @@
 
 <script>
 import { Icon, TreeSelect } from 'vant';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapState } from 'vuex';
 import TreeSelectContent from './TreeSelectContent';
 
 export default {
@@ -37,16 +41,18 @@ export default {
     [TreeSelect.name]: TreeSelect,
     TreeSelectContent
   },
-  data() {
-    return {
-      activeIndex: 0
-    };
-  },
   computed: {
-    ...mapGetters(['filterCurrentTree', 'findCurrentLastId'])
+    ...mapGetters(['filterCurrentTree', 'findCurrentLastId']),
+    ...mapState(['currentLastId', 'currentRank']),
+    activeIndex: {
+      get() {
+        return this.$store.state.activeIndex;
+      },
+      set() {}
+    }
   },
   methods: {
-    ...mapMutations(['changeCurrentTree'])
+    ...mapMutations(['changeCurrentTree', 'changeActiveIndex'])
   }
 };
 </script>
@@ -60,7 +66,6 @@ export default {
 
   .title-box {
     height: 50px;
-    cursor: pointer;
 
     h3 {
       margin: 0;
@@ -69,6 +74,7 @@ export default {
       font-weight: normal;
       font-size: 14px;
       line-height: 16px;
+      cursor: pointer;
     }
   }
 }
